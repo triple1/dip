@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Логотип организации</h5>
+            <div class="card-body">
+                <h5 class="card-title">Смена логотипа</h5>
+
+                <div style="width: 500px">
+                    {% if app.user.provider.imgIconName %}
+                        <img style="border: 1px solid #acacac" src="{{ asset('/') }}images/providers/{{ app.user.provider.imgIconName }}" /><br />
+                        <br>
+                        <form method="POST" action="{{ path('provider_remove_icon_process') }}">
+                            <input type="submit" value="Удалить логотип организации" />
+                        </form>
+                    {% else %}
+                        <form method="POST" enctype="multipart/form-data" action="{{ path('upload_image_process') }}">
+                            <input type="file" name="img_icon" />
+                            <input type="submit" value="Загрузить" />
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Редактирование данных организации</h5>
+            <div class="card-body">
+                <h5 class="card-title">Редактирование</h5>
+                <p class="card-text">Пожалуйста заполните все поля отмеченные '<span style="color: red">*</span>'</p>
+
+                <div style="width: 500px">
+                    <form method="POST" action="{{ path('provider_edit_process') }}">
+                        {{ form_widget(form) }}
+                        <a href="{{ path('home') }}" class="btn btn-info">Отмена</a>
+                        <input type="submit" class="btn btn-primary" value="Сохранить" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

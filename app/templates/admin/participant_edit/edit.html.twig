@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Participant Edit</h5>
+            <div class="card-body">
+                <h5 class="card-title">Edit new Participant</h5>
+                <p class="card-text">Please fill all fields which marked '<span style="color: red">*</span>'</p>
+
+                {% if providers|length > 0 %}
+                <div style="width: 500px">
+                    <form method="POST" action="{{ path('admin_participant_edit_process') }}">
+                        <input type="hidden" name="id_participant", value="{{ part.id }}" />
+                        <div>
+                            <label for="provider_choice"><b>Provider</b></label>
+                            <select class="form-select" name="id_provider" id="provider_choice">
+                        {% for provider in providers %}
+                            {% set selected = false %}
+                            {% for pprov in part.providers %}
+                                {% if provider.id == pprov.id %}{% set selected = true %}{% endif %}
+                            {% endfor %}
+
+                                <option {% if selected == true%}selected{% endif%} value="{{ provider.id }}">{{ provider.name }}</option>
+                        {% endfor %}
+                            </select>
+                            <br><br>
+                        </div>
+
+                        {{ form_widget(form) }}
+                        <a href="{{ path('admin_providers') }}" class="btn btn-info">Cancel</a>
+                        <input type="submit" class="btn btn-primary" value="Save" />
+                    </form>
+                </div>
+                {% else %}
+                    Participant should be assign to some Provider. No providers found. Please create Provider first.
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

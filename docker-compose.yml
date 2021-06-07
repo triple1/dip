@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+    dip_nginx_php:
+        build: ./docker/
+        container_name: dip_nginx_php
+        ports:
+            - 8089:8080
+        volumes:
+            - ~/.composer/cache:/.composer/cache:cached
+            - ./app:/app:delegated
+            - ./app/vendor:/app/vendor:cached
+        working_dir: /app
+
+    dio_db:
+        image: mysql:8
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        volumes:
+            - ./docker/mysql_data/mysql:/var/lib/mysql
+            - ./docker/config/mysql_local.cnf:/etc/mysql/conf.d/mysql_local.cnf:ro
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=Q1w2e3r4
+            - MYSQL_DATABASE=dip.local
+            - TZ=Europe/Kiev
+
+volumes:
+    dip_db:
+    dip_nginx_php:

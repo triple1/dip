@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Services</h5>
+            <div class="card-body">
+                <h5 class="card-title">List of Services.</h5>
+                <p class="card-text">On that page you can create new or update provider service.</p>
+                <a href="{{ path('admin_service_create') }}" class="btn btn-primary">Create new Service</a>
+                <br><br>
+
+                {% if services|length > 0 %}
+                <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for service in services %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ service.id }}</td>
+                        <td>{{ service.name }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+                {% else %}
+                    <b>No Services</b>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

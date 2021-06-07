@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Детали об участнике</h5>
+            <div class="card-body">
+                <h5 class="card-title">Личные данные участника</h5>
+                <ul>
+                    <li>Имя: {{ participant.firstName }}</li>
+                    <li>Фамилия: {{ participant.lastName }}</li>
+                    <li>Дата рождения:
+                        {% if participant.dob %}
+                            {{ participant.dob.format('d.m.Y') }}
+                        {% else %}
+                            данные отсутствуют
+                        {% endif %}
+                    </li>
+                    <li>Адрес:
+                        {% if participant.address %}
+                            {{ participant.address }}
+                        {% else %}
+                            данные отсутствуют
+                        {% endif %}
+                    </li>
+                    <li>Телефон:
+                        {% if participant.phone %}
+                        {{ participant.phone }}
+                        {% else %}
+                            данные отсутствуют
+                        {% endif %}
+                    </li>
+                </ul><br>
+                <a href="{{ path('participants') }}" class="link link-primary">OK</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

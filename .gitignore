@@ -1,0 +1,7 @@
+.idea
+/docker/mysql_data
+/app/vendor/*
+/app/var/cache/*
+/app/var/log/*
+/app/public/images/providers/*
+.DS_Store

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Provider create</h5>
+            <div class="card-body">
+                <h5 class="card-title">Create new Provider</h5>
+                <p class="card-text">Please fill all fields which marked '<span style="color: red">*</span>'</p>
+
+                <div style="width: 500px">
+                    <form method="POST" action="{{ path('admin_provider_create_process') }}" enctype="multipart/form-data">
+                        {{ form_widget(form) }}
+                        <a href="{{ path('admin_providers') }}" class="btn btn-info">Cancel</a>
+                        <input type="submit" class="btn btn-primary" value="Save" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

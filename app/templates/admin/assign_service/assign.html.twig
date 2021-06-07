@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Assign Services to Provider</h5>
+            <div class="card-body">
+                <h5 class="card-title">Assign Services to Provider</h5>
+
+                {% if servicesAll|length > 0 %}
+                <div>
+                    <form method="POST" action="{{ path('admin_assign_service_process') }}">
+                        <input type="hidden" name="id_provider" value="{{ provider.id }}" />
+                        <ul>
+                        {% for service in servicesAll %}
+
+                            {% set checked = false %}
+                            {% for serviceExist in provider.services %}
+                                {% if serviceExist.id == service.id %}
+                                    {% set checked = true %}
+                                {% endif %}
+                            {% endfor %}
+
+                            <li>
+                                <input {% if checked == true %}checked{% endif%} type="checkbox" id="service_{{ service.id }}" class="form-check-input" name="services_ids[]" value="{{ service.id }}">
+                                <label class="form-check-label" for="service_{{ service.id }}">
+                                    {{ service.name }}
+                                </label>
+                            </li>
+                        {% endfor %}
+                        </ul>
+
+                        <a href="{{ path('admin_providers') }}" class="btn btn-info">Cancel</a>
+                        <input type="submit" class="btn btn-primary" value="Assign" />
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

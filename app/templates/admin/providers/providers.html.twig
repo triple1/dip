@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Providers</h5>
+            <div class="card-body">
+                <h5 class="card-title">List of providers.</h5>
+                <p class="card-text">On that page you can create new or update organisation.</p>
+                <a href="{{ path('admin_provider_create') }}" class="btn btn-primary">Create new Provider</a>
+                <br><br>
+
+                {% if providers|length > 0 %}
+                <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact Phone</th>
+                    <th scope="col">Contact Address</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Services</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for provider in providers %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ provider.id }}</td>
+                        <td>{{ provider.name }}</td>
+                        <td>{{ provider.email }}</td>
+                        <td>{{ provider.phone }}</td>
+                        <td>{{ provider.address }}</td>
+                        <td>
+                            {{ provider.userCreated.email }}
+                        </td>
+                        <td>
+                            {% if provider.services|length > 0 %}
+                                {% for service in provider.services %}
+                                    {{ service.name }}
+                                    {% if  loop.index != provider.services|length %}, {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_assign_service', {'idProvider':provider.id}) }}">assign services</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+                {% else %}
+                    <b>No Providers</b>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Assign Services</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="services_list"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

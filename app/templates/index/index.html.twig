@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        {% if provider is defined %}
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Данные об организации</h5>
+            <div class="card-body">
+                <h5 class="card-title">Оперативная сводка</h5>
+                <table>
+                    <tr>
+                        <td>Новые заявки:</td>
+                        <td>
+                            <span class="badge bg-primary">{{ referralsCountNewCount }}</span>
+                            <a href="{{ path('referrals') }}" class="link link-primary">перейти к управлению заявками</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        {% if newsList|length > 0 %}
+        <br>
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Лента новостей организаций</h5>
+            <div class="card-body">
+                {% for news in newsList %}
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ news.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ news.dateCreatedAt.format('d.m.Y H:i') }} - {{ news.provider.name }}</h6>
+                            <p class="card-text">{{ (news.content|striptags)|u.truncate(150, '...') }}</p>
+                            <a href="{{ path('news_details', {id:news.id}) }}" class="card-link">Подробнее</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% else %}
+            <b>Вы зашли как администратор системы.</b>
+        {% endif %}
+    </div>
+{% endblock %}

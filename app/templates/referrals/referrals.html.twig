@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Входящие заявки</h5>
+            <div class="card-body">
+                <h5 class="card-title">Заявки в ожидании выполнения</h5>
+                {% if referrals|length > 0 %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Дата</th>
+                            <th>Статус</th>
+                            <th>От участника</th>
+                            <th>Участник организации</th>
+                            <th>Услуги</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ref in referrals %}
+                            <tr>
+                                <td>{{ ref.id }}</td>
+                                <td>{{ ref.dateCreatedAt.format('d.m.Y H:i:s') }}</td>
+                                <td>
+                                    {% if ref.status == 'STATUS_NEW' %}
+                                        <span class="badge bg-primary">новая</span>
+                                    {% elseif ref.status == 'STATUS_DONE' %}
+                                        <span class="badge bg-success">выполнена</span>
+                                    {% elseif ref.status == 'STATUS_REJECT' %}
+                                        <span class="badge bg-danger">отклонена</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ ref.participant.firstName }} {{ ref.participant.lastName }}</td>
+                                <td>
+                                    {% if ref.participant.ownerProvider %}
+                                        {{ ref.participant.ownerProvider.name }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ ref.services|join(', ') }}
+                                </td>
+                                <td>
+                                    {% if ref.status == 'STATUS_NEW' %}
+                                        <a href="{{ path('referral_success', {id:ref.id}) }}" class="link link-success">Выполнить</a><br>
+                                        <a href="{{ path('referral_reject', {id:ref.id}) }}" class="link link-danger">Отклонить</a><br>
+                                    {% endif %}
+                                    <a href="{{ path('referral_details', {id:ref.id}) }}" class="link link-info">Детали заявки</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <b>Заявок нет</b>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

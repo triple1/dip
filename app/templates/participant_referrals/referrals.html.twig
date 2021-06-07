@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Заявки</h5>
+            <div class="card-body">
+                <h5 class="card-title">Заявки участника '{{ participant.firstName }} {{ participant.lastName }}'</h5>
+
+                <a href="{{ path('participants') }}" class="btn btn-info">Вернуться назад</a><br><br>
+                <a href="{{ path('referral_create', {id:participant.id}) }}" class="btn btn-primary">Создать</a>
+                <br><br>
+
+                {% if referrals|length > 0 %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Номер заявки</th>
+                            <th>Дата создания</th>
+                            <th>Статус</th>
+                            <th>Услуги</th>
+                            <th>Организация</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ref in referrals %}
+                            <tr>
+                                <td>{{ ref.id }}</td>
+                                <td>{{ ref.dateCreatedAt.format('d.m.Y H:i:s') }}</td>
+                                <td>
+                                    {% if ref.status == 'STATUS_NEW' %}
+                                    <span class="badge bg-primary">новая</span>
+                                    {% elseif ref.status == 'STATUS_DONE' %}
+                                    <span class="badge bg-success">выполнена</span>
+                                    {% elseif ref.status == 'STATUS_REJECT' %}
+                                    <span class="badge bg-danger">отклонена</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ ref.services|join(', ') }}</td>
+                                <td>{{ ref.provider.name }}</td>
+                                <td>
+                                    <a href="{{ path('referral_details', {id:ref.id}) }}" class="link link-info">Детали заявки</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <b>Заявок нет</b>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

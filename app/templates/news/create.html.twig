@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Публикация новости</h5>
+            <div class="card-body">
+                <h5 class="card-title">Создание новой новости организации</h5>
+                <p class="card-text">Заполните все поле отмеченные '<span style="color: red">*</span>'</p>
+
+                <div style="width: 1000px">
+                    <form method="POST" action="{{ path('news_create') }}">
+                        {{ form_widget(form) }}
+                        <a href="{{ path('news') }}" class="btn btn-info">Отмена</a>
+                        <input type="submit" class="btn btn-primary" value="Сохранить" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

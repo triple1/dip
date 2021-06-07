@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Удаление</h5>
+            <div class="card-body">
+                <h5 class="card-title">Удаление участника</h5>
+                <p class="card-text"><span style="color: red">Внимание!!! Все данные участника будут удалены!</span></p>
+
+                <div style="width: 500px">
+                    <form method="POST" action="{{ path('participant_remove_process') }}">
+                        <input type="hidden" name="id_participant", value="{{ part.id }}" />
+
+                        <a href="{{ path('participants') }}" class="btn btn-info">Отмена</a>
+                        <input type="submit" class="btn btn-danger" value="Удалить" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

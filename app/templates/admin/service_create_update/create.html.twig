@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Service create</h5>
+            <div class="card-body">
+                <h5 class="card-title">Create new Service</h5>
+                <p class="card-text">Please fill all fields which marked '<span style="color: red">*</span>'</p>
+
+                <div style="width: 500px">
+                    <form method="POST" action="{{ path('admin_service_create_process') }}">
+                        {{ form_widget(form) }}
+                        <a href="{{ path('admin_services') }}" class="btn btn-info">Cancel</a>
+                        <input type="submit" class="btn btn-primary" value="Save" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

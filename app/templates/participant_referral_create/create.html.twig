@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Создание заявки</h5>
+            <div class="card-body">
+                <h5 class="card-title">Создание новой заявки от имени '{{ participant.firstName }} {{ participant.lastName }}'</h5>
+                <p class="card-text">Заполните все поле отмеченные '<span style="color: red">*</span>'</p>
+
+                <div style="width: 500px">
+                    <form method="POST" action="{{ path('participant_referral_create_process') }}">
+                        <input type="hidden" name="id_participant" value="{{ participant.id }}" />
+
+                        <div>
+                            <label for="provider_choice"><b>На какую организацию создать заявку?</b></label>
+                            <select class="form-select" name="id_provider" id="provider_choice">
+                                {% for provider in providers %}
+                                    <option value="{{ provider.id }}">{{ provider.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <br>
+
+                        <div>
+                            <label for="service_choice"><b>Какие услуги необходимы?</b></label>
+                            <ul>
+                                {% for service in services %}
+                                    <li>
+                                        <input type="checkbox" id="service_{{ service.id }}" class="form-check-input" name="services[]" value="{{ service.id }}">
+                                        <label class="form-check-label" for="service_{{ service.id }}">
+                                            {{ service.name }}
+                                        </label>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div>
+                            <label for="referral_content"><b>Комментарии</b></label><br>
+                            <textarea style="width: 500px; height: 100px" name="content" id="referral_content" class="text"></textarea>
+                        </div>
+
+                        <br>
+
+                        <a href="{{ path('participant_referrals', {id:participant.id}) }}" class="btn btn-info">Отмена</a>
+                        <input type="submit" class="btn btn-primary" value="Создать" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

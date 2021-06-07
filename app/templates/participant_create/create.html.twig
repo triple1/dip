@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Новый участник</h5>
+            <div class="card-body">
+                <h5 class="card-title">Создание нового участника организации</h5>
+                <p class="card-text">Заполните все поле отмеченные '<span style="color: red">*</span>'</p>
+
+                <div style="width: 500px">
+                    <form method="POST" action="{{ path('participant_create_process') }}">
+                        {{ form_widget(form) }}
+                        <a href="{{ path('participants') }}" class="btn btn-info">Отмена</a>
+                        <input type="submit" class="btn btn-primary" value="Сохранить" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Создание пользователя</h5>
+            <div class="card-body">
+                <h5 class="card-title">Новый пользователь</h5>
+                <p class="card-text">Пожалуйста заполните все поля отмеченные '<span style="color: red">*</span>'</p>
+
+                <div style="width: 500px">
+                    <form method="POST" action="{{ path('admin_user_create_process') }}">
+
+                        <div>
+                            <label for="provider_choice"><b>Организация</b></label>
+                            <select class="form-select" name="id_provider" id="provider_choice">
+                        {% for provider in providers %}
+                                <option value="{{ provider.id }}">{{ provider.name }}</option>
+                        {% endfor %}
+                            </select>
+                            <br><br>
+                        </div>
+
+                        {{ form_widget(form) }}
+                        <a href="{{ path('admin_users') }}" class="btn btn-info">Отмена</a>
+                        <input type="submit" class="btn btn-primary" value="Сохранить" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

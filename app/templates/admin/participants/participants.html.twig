@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Participants</h5>
+            <div class="card-body">
+                <h5 class="card-title">List of all participants.</h5>
+                <p class="card-text">On that page you can find all participants from all providers.</p>
+                <a href="{{ path('admin_participant_create') }}" class="btn btn-primary">Create new Participant</a>
+                <br><br>
+
+                {% if participants|length > 0 %}
+                <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">id</th>
+                    <th scope="col">Provider</th>
+                    <th scope="col">Created at</th>
+                    <th scope="col">First name</th>
+                    <th scope="col">Last name</th>
+                    <th scope="col">DOB</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for part in participants %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ part.id }}</td>
+                        <td>
+                            {% if part.providers|length > 0 %}
+                                <ul>
+                                {% for prov in part.providers %}
+                                    <li>{{ prov.name }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </td>
+                        <td>{{ part.dateCreatedAt.format('d.m.Y H:i:s') }}</td>
+                        <td>{{ part.firstName }}</td>
+                        <td>{{ part.lastName }}</td>
+                        <td>
+                            {% if part.dob %}
+                            {{ part.dob.format('d.m.Y') }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('admin_participant_edit', {idParticipant:part.id}) }}">edit</a><br />
+                            <a href="{{ path('admin_participant_remove', { idParticipant:part.id }) }}">remove</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+                {% else %}
+                    <b>No Participants</b>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

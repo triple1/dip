@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">{{ news.dateCreatedAt.format('d.m.Y H:i:s') }} {{ news.title }}</h5>
+            <div class="card-body">
+                <b>Организация: </b>{{ news.provider.name }}<br><br>
+                {{ news.content|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

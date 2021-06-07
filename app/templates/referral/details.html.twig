@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Детали заявки</h5>
+            <div class="card-body">
+                <h5 class="card-title">Подробная информация о заявке # {{ referral.id }}</h5>
+
+                <ul>
+                    <li>Номер заявки: {{ referral.id }}</li>
+                    <li>Статус заявки:
+                        {% if referral.status == 'STATUS_NEW' %}
+                            <span class="badge bg-primary">новая</span>
+                        {% elseif referral.status == 'STATUS_DONE' %}
+                            <span class="badge bg-success">выполнена</span>
+                        {% elseif referral.status == 'STATUS_REJECT' %}
+                            <span class="badge bg-danger">отклонена</span>
+                        {% endif %}
+                    </li>
+                    <li>Дата создания: {{ referral.dateCreatedAt.format('d.m.Y h:i:s') }}</li>
+                    <li>От участника: {{ referral.participant.firstName }} {{ referral.participant.lastName }}</li>
+                    <li>На организацию: {{ referral.provider.name }}</li>
+                    <li>На услуги: {{ referral.services|join(', ') }}</li>
+                    <li>Комментарии: {{ referral.content }}</li>
+                </ul>
+
+                <a href="#" onclick="window.history.back()" class="btn btn-info">OK</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

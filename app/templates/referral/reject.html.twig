@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="card" style="width: 80rem">
+            <h5 class="card-header">Отклонение заявки</h5>
+            <div class="card-body">
+                <h5 class="card-title">Отклонение заявки</h5>
+                <form method="POST" action="{{ path('referral_reject_process') }}">
+                    <input type="hidden" value="{{ referral.id }}" name="id" />
+                    <a href="{{ path('participant_referrals', {id:referral.participant.id}) }}" class="btn btn-info">Отмена</a>
+                    <input type="submit" value="Отклонить заявку" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
